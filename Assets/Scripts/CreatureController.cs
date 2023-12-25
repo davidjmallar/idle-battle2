@@ -5,10 +5,10 @@ namespace Assets.Scripts
 	public class CreatureController : MonoBehaviour
 	{
 		public CreatureAnimationController AnimationController;
-		private Creature _creature;
+		public Creature Creature { get; private set; }
 		public void Setup(Creature creature, bool isEnemy = false)
 		{
-			_creature = creature;
+			Creature = creature;
 			transform.localScale = new Vector3(isEnemy ? -1 : 1, 1, 1);
 			AnimationController.Setup(creature);
 		}
@@ -16,7 +16,7 @@ namespace Assets.Scripts
 		public void Feed(float deltaT)
 		{
 			AnimationController.Feed(deltaT);
-			_creature.Feed(deltaT);
+			Creature.Feed(deltaT);
 		}
 	}
 }

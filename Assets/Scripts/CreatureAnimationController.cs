@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -17,13 +18,14 @@ namespace Assets.Scripts
 
 		private Creature _creature;
 
-		[ReadOnly]
-		public AnimationState State;
-		public SpriteRenderer SpriteRenderer;
-		public SpriteAtlas CreatureAtlas;
+		[Required] public MMF_Player ProgressionFeedback;
+
+		[Required] public SpriteRenderer SpriteRenderer;
+		[Required] public SpriteAtlas CreatureAtlas;
 		public float BaseAnimationSpeed = 0.2f;
-		[ReadOnly]
-		public float CurrentAnimationSpeed = 0.2f;
+
+		[ReadOnly] public float CurrentAnimationSpeed = 0.2f;
+		[ReadOnly] public AnimationState State;
 
 		private float _tNextFrame = 0.2f;
 		private float _tNextPeriodicAttack = 0f;
@@ -42,6 +44,8 @@ namespace Assets.Scripts
 			_creature = creature;
 			SpriteRenderer.enabled = true;
 			SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_0");
+			ProgressionFeedback.Events.OnComplete.AddListener(() => StopWalk());
+
 		}
 
 		[Button]
@@ -66,6 +70,14 @@ namespace Assets.Scripts
 			_periodicAttack = spell.Periodicity;
 			_tNextPeriodicAttack = _periodicAttack;
 		}
+		[Button]
+		public void Proceed()
+		{
+			StartWalk();
+			var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
+			positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
+			ProgressionFeedback.PlayFeedbacks();
+		}
 
 		[Button]
 		public void Die()
@@ -79,6 +91,7 @@ namespace Assets.Scripts
 		public void StartWalk()
 		{
 			State = AnimationState.Walk;
+			CurrentAnimationSpeed = BaseAnimationSpeed * 0.5f;
 			_frameIndex = 0;
 			_tNextFrame = 0;
 		}

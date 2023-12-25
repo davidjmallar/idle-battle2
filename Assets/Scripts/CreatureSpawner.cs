@@ -1,6 +1,7 @@
 using Assets.Scripts;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CreatureSpawner : MonoBehaviour
@@ -20,6 +21,10 @@ public class CreatureSpawner : MonoBehaviour
 	public void SpawnDummyEnemy()
 	{
 		SpawnEnemy(_index++);
+	}
+	public bool CanProceed(int index)
+	{
+		return _foeTeam.All(f => f.Creature.PositionInMap.x > index);
 	}
 	public void SpawnEnemy(int index)
 	{
