@@ -6,12 +6,24 @@ public class BattleManager : MonoBehaviour
 {
 	[Required]
 	public CreatureSpawner CreatureSpawner;
+	[Required]
+	public TileSpawnerManager TileSpawnerManager;
+	[Required]
+	public CameraController CameraController;
 
 	public bool IsBattlePaused { get; set; } = true;
 
 	public int ProgressionIndex { get; set; } = 0;
 
 	public Action OnProgression { get; set; }
+
+	[Button]
+	public void Proceed()
+	{
+		CreatureSpawner.ProceedHeroTeam();
+		CameraController.Proceed();
+		TileSpawnerManager.Instance.Progress();
+	}
 
 	private void Start()
 	{

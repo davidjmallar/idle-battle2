@@ -22,6 +22,11 @@ public class CreatureSpawner : MonoBehaviour
 	{
 		SpawnEnemy(_index++);
 	}
+	[Button]
+	public void ProceedHeroTeam()
+	{
+		_heroTeam.ForEach(h=>h.AnimationController.Proceed());
+	}
 	public bool CanProceed(int index)
 	{
 		return _foeTeam.All(f => f.Creature.PositionInMap.x > index);

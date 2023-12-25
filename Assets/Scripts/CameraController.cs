@@ -1,3 +1,5 @@
+using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +11,7 @@ public class CameraController : MonoBehaviour
 
 	//public float TileHeight { get; private set; }
 	public int TileWidth => GlobalConstants.MapWidth;
-
+	public MMF_Player ProgressionFeedback;
 	//private static CameraController _instance;
 	//public static CameraController Instance => _instance;
 
@@ -22,6 +24,14 @@ public class CameraController : MonoBehaviour
 	//	UnitSize = Mathf.CeilToInt((float)Screen.width / (float)TileWidth);
 	//	_instance = this;
 	//}
+
+	[Button]
+	public void Proceed()
+	{
+		var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
+		positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
+		ProgressionFeedback.PlayFeedbacks();
+	}
 
 	private void Start()
 	{
