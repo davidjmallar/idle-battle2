@@ -1,6 +1,5 @@
 ﻿using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
-using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -45,7 +44,6 @@ namespace Assets.Scripts
 			SpriteRenderer.enabled = true;
 			SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_0");
 			ProgressionFeedback.Events.OnComplete.AddListener(() => StopWalk());
-
 		}
 
 		[Button]
@@ -57,7 +55,9 @@ namespace Assets.Scripts
 			_tNextFrame = 0;
 		}
 
-		[Button] public void StartTestPeriodicAttack() => SetPeriodicAttack(new SpellData() { Periodicity = 1f });
+		[Button]
+		public void StartTestPeriodicAttack() => SetPeriodicAttack(new SpellData() { Periodicity = 1f });
+
 		[Button]
 		public void StopPeriodicAttack()
 		{
@@ -76,6 +76,7 @@ namespace Assets.Scripts
 			StartWalk();
 			var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
 			positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
+			_creature.PositionInMap = new Vector3Int(_creature.PositionInMap.x + 1, _creature.PositionInMap.y, 0);
 			ProgressionFeedback.PlayFeedbacks();
 		}
 

@@ -11,7 +11,7 @@ public class CreatureSpawner : MonoBehaviour
 
 	private readonly List<CreatureController> _heroTeam = new List<CreatureController>();
 	private readonly List<CreatureController> _foeTeam = new List<CreatureController>();
-	private int _index = 3;
+	private int _index = 6;
 	[Button]
 	public void SpawnDummyHeroTeam()
 	{
@@ -25,11 +25,11 @@ public class CreatureSpawner : MonoBehaviour
 	[Button]
 	public void ProceedHeroTeam()
 	{
-		_heroTeam.ForEach(h=>h.AnimationController.Proceed());
+		_heroTeam.ForEach(h => h.AnimationController.Proceed());
 	}
-	public bool CanProceed(int index)
+	public bool CanProceed()
 	{
-		return _foeTeam.All(f => f.Creature.PositionInMap.x > index);
+		return _heroTeam.All(c => c.AnimationController.State != CreatureAnimationController.AnimationState.Walk) && _heroTeam.All(c => (c.Creature.PositionInMap.x + 1) < _foeTeam.Min(f => f.Creature.PositionInMap.x));
 	}
 	public void SpawnEnemy(int index)
 	{
@@ -48,6 +48,7 @@ public class CreatureSpawner : MonoBehaviour
 	private CreatureController SpawnCreature(Creature creature, Vector3Int position, bool isEnemy)
 	{
 		var instance = Instantiate(CreatureAnimationControllerTemplate, CreatureParent);
+		creature.PositionInMap = position;
 		instance.transform.localPosition = position;
 		instance.Setup(creature, isEnemy);
 		return instance;

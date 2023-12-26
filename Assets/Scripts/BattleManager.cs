@@ -31,12 +31,19 @@ public class BattleManager : MonoBehaviour
 		{
 			TileSpawnerManager.Instance.Progress();
 		}
+		CreatureSpawner.SpawnDummyHeroTeam();
+		CreatureSpawner.SpawnDummyEnemy();
+
 	}
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			OnProgression?.Invoke();
+		}
+		if (CreatureSpawner.CanProceed())
+		{
+			Proceed();
 		}
 		CreatureSpawner.FeedCreatures(Time.deltaTime);
 	}
