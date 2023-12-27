@@ -17,7 +17,7 @@ namespace Assets.Scripts
 		{
 			return new SpellData()
 			{
-				Periodicity = 2.0f
+				Periodicity = 1.0f
 			};
 		}
 

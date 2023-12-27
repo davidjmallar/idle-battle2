@@ -13,7 +13,10 @@ public class Creature
 	[OdinSerialize] public int Agility { get; set; }
 	[OdinSerialize] public int Speed { get; set; }
 	[OdinSerialize]
+
 	public List<string> AvailableSpells { get; set; } = new List<string>();
+	public AnimationState State;
+
 	public CreatureData Data => DataService.GetCreature(CreatureId);
 	public Vector3Int PositionInMap { get; set; }
 	public bool InTheTeam { get; set; }
@@ -39,15 +42,16 @@ public class Creature
 
 	public void Feed(float deltaT)
 	{
-		foreach (PeriodicAttack attack in PeriodicAttacks)
-		{
-			attack.NextTimeToHit -= deltaT;
-			if (attack.NextTimeToHit < 0)
+		if (AttackManager.HasTarget(this) && State != AnimationState.Walk && State != AnimationState.Dying)
+			foreach (PeriodicAttack attack in PeriodicAttacks)
 			{
-				CreatureEventHub.OnCreatureCastedSpell?.Invoke(this, attack.SpellData);
-				attack.NextTimeToHit = attack.SpellData.Periodicity;
+				attack.NextTimeToHit -= deltaT;
+				if (attack.NextTimeToHit < 0)
+				{
+					CreatureEventHub.OnCreatureCastedSpell?.Invoke(this, attack.SpellData);
+					attack.NextTimeToHit = attack.SpellData.Periodicity;
+				}
 			}
-		}
 	}
 
 	public void AttackThis(Creature attacker, int attackDamage)

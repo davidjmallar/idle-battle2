@@ -21,6 +21,8 @@ public class CreatureSpawner : MonoBehaviour
 	public void SpawnDummyEnemy()
 	{
 		SpawnEnemy(_index++);
+		SpawnEnemy(_index++);
+		SpawnEnemy(_index++);
 	}
 	[Button]
 	public void ProceedHeroTeam()
@@ -29,7 +31,7 @@ public class CreatureSpawner : MonoBehaviour
 	}
 	public bool CanProceed()
 	{
-		return !Foes.Any() || (Heroes.All(c => c.AnimationController.State != CreatureAnimationController.AnimationState.Walk) && Heroes.All(c => (c.Creature.PositionInMap.x + 1) < Foes.Min(f => f.Creature.PositionInMap.x)));
+		return Foes.Any(c => c.Creature.State != AnimationState.Dying) && (Heroes.All(c => c.Creature.State != AnimationState.Walk) && Heroes.All(c => (c.Creature.PositionInMap.x + 1) < Foes.Where(c => c.Creature.State != AnimationState.Dying).Min(f => f.Creature.PositionInMap.x)));
 	}
 	public void SpawnEnemy(int index)
 	{
