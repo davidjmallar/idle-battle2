@@ -1,5 +1,7 @@
 ﻿using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -13,6 +15,7 @@ namespace Assets.Scripts
 			Walk = 4,
 			Attack = 8,
 			Dying = 16,
+			Dead = 32,
 		}
 
 		private Creature _creature;
@@ -27,20 +30,31 @@ namespace Assets.Scripts
 		[ReadOnly] public AnimationState State;
 
 		private float _tNextFrame = 0.2f;
+		private float _tAttackSpeedMultiplier = 0.5f;
+		private float _frameToLandAttack = 3f;
 		private float _tNextPeriodicAttack = 0f;
 		private float _periodicAttack = 0f;
 
 		private int _frameIndex = 0;
 		private bool _isRunning = true;
+		private List<AttackCast> _attackCasts = new List<AttackCast>();
 
 		private void Awake()
 		{
 			SpriteRenderer.enabled = false;
 		}
 
+		private void OnDestroy()
+		{
+			CreatureEventHub.OnCreatureDied -= OnCreatureDie;
+			CreatureEventHub.OnCreatureCastedSpell -= OnCreatureCastedSpell;
+		}
+
 		public void Setup(Creature creature)
 		{
 			_creature = creature;
+			CreatureEventHub.OnCreatureDied += OnCreatureDie;
+			CreatureEventHub.OnCreatureCastedSpell += OnCreatureCastedSpell;
 			SpriteRenderer.enabled = true;
 			SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_0");
 			ProgressionFeedback.Events.OnComplete.AddListener(() => StopWalk());
@@ -50,13 +64,16 @@ namespace Assets.Scripts
 		public void Attack()
 		{
 			State = AnimationState.Attack;
-			CurrentAnimationSpeed = BaseAnimationSpeed * 0.5f;
+			CurrentAnimationSpeed = BaseAnimationSpeed * _tAttackSpeedMultiplier;
 			_frameIndex = 0;
 			_tNextFrame = 0;
 		}
 
 		[Button]
-		public void StartTestPeriodicAttack() => SetPeriodicAttack(new SpellData() { Periodicity = 1f });
+		public void StartTestPeriodicAttack()
+		{
+			SetPeriodicAttack(new SpellData() { Periodicity = 1f });
+		}
 
 		[Button]
 		public void StopPeriodicAttack()
@@ -70,6 +87,7 @@ namespace Assets.Scripts
 			_periodicAttack = spell.Periodicity;
 			_tNextPeriodicAttack = _periodicAttack;
 		}
+
 		[Button]
 		public void Proceed()
 		{
@@ -80,10 +98,12 @@ namespace Assets.Scripts
 			ProgressionFeedback.PlayFeedbacks();
 		}
 
+
 		[Button]
 		public void Die()
 		{
 			State = AnimationState.Dying;
+			StartCoroutine(Disapper());
 			_frameIndex = 0;
 			_tNextFrame = 0;
 		}
@@ -132,10 +152,6 @@ namespace Assets.Scripts
 			{
 				_tNextFrame = CurrentAnimationSpeed;
 				SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_{(int)State + _frameIndex++}");
-				if (State == AnimationState.Attack && _frameIndex == 2)
-				{
-					// Attack?
-				}
 				if (_frameIndex > 3)
 				{
 					EndOfAnimationCycle();
@@ -150,6 +166,50 @@ namespace Assets.Scripts
 					_tNextPeriodicAttack = _periodicAttack;
 				}
 			}
+
+			if (State == AnimationState.Idle)
+				foreach (var cast in _attackCasts)
+				{
+					cast.TimeToCast -= deltaT;
+					if (cast.TimeToCast <= 0)
+					{
+						CreatureEventHub.OnCreatureLandedSpell?.Invoke(_creature, cast.Spell);
+					}
+				}
+			_attackCasts.RemoveAll(c => c.TimeToCast <= 0);
 		}
+
+		private void OnCreatureDie(Creature creature)
+		{
+			if (creature != _creature) return;
+			Die();
+		}
+		private void OnCreatureCastedSpell(Creature creature, SpellData spell)
+		{
+			if (creature != _creature) return;
+			_attackCasts.Add(new AttackCast(spell, BaseAnimationSpeed * _tAttackSpeedMultiplier * _frameToLandAttack));
+			Attack();
+		}
+		IEnumerator Disapper()
+		{
+			yield return new WaitForSeconds(2f);
+			CreatureMap.Heroes.RemoveAll(c=>c.Creature == _creature);
+			CreatureMap.Foes.RemoveAll(c=>c.Creature == _creature);
+			Destroy(gameObject);
+			//CreatureEventHub.OnCreatureDisappeared?.Invoke(_creature);
+		}
+	}
+
+	public class AttackCast
+	{
+		public AttackCast(SpellData spell, float timeToCast)
+		{
+			Spell = spell;
+			TimeToCast = timeToCast;
+		}
+
+		public SpellData Spell { get; private set; }
+		public float TimeToCast { get; set; }
+
 	}
 }

@@ -1,15 +1,17 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
 	public class CreatureController : MonoBehaviour
 	{
 		public CreatureAnimationController AnimationController;
+		public TextMeshProUGUI HealthText;
 		public Creature Creature { get; private set; }
 		public void Setup(Creature creature, bool isEnemy = false)
 		{
 			Creature = creature;
-			transform.localScale = new Vector3(isEnemy ? -1 : 1, 1, 1);
+			AnimationController.SpriteRenderer.transform.localScale = new Vector3(isEnemy ? -1 : 1, 1, 1);
 			AnimationController.Setup(creature);
 		}
 
@@ -17,6 +19,7 @@ namespace Assets.Scripts
 		{
 			AnimationController.Feed(deltaT);
 			Creature.Feed(deltaT);
+			HealthText.text = $"{Creature.MaxHealth}/{Creature.Health}";
 		}
 	}
 }

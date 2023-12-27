@@ -15,7 +15,6 @@
 		public int SpeMultiplier;
 
 		// Threat
-		// Dam/Heal?
-
+		// Dam/Heal? -> need creature too
 	}
 }
