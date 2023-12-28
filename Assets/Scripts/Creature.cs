@@ -9,35 +9,29 @@ public class Creature
 	[OdinSerialize] public string CreatureId { get; set; }
 	[OdinSerialize] public int Level { get; set; }
 	[OdinSerialize] public Vector3Int PositionInGroup { get; set; }
-	[OdinSerialize] public int Strength { get; set; }
-	[OdinSerialize] public int Agility { get; set; }
-	[OdinSerialize] public int Speed { get; set; }
-	[OdinSerialize]
+	[OdinSerialize] public int StrengthLevel { get; set; }
+	[OdinSerialize] public int AgilityLevel { get; set; }
+	[OdinSerialize] public int SpeedLevel { get; set; }
+	[OdinSerialize] public List<string> AvailableSpells { get; set; } = new List<string>();
 
-	public List<string> AvailableSpells { get; set; } = new List<string>();
 	public AnimationState State;
-
 	public CreatureData Data => DataService.GetCreature(CreatureId);
 	public Vector3Int PositionInMap { get; set; }
-	public bool InTheTeam { get; set; }
 	public float Threat { get; set; }
-	public Creature Target { get; set; }
 	public double Health { get; set; }
-	public double MaxHealth => 5;
-
+	public AggregatedStats AggregatedStats { get; set; } = new AggregatedStats();
 	public List<PeriodicAttack> PeriodicAttacks { get; } = new List<PeriodicAttack>();
-
-	public List<SpellData> SpellDatas => AvailableSpells.Select(s => DataService.GetSpell(s)).ToList();
+	public List<SpellData> SpellDatas => AvailableSpells.ConvertAll(s => DataService.GetSpell(s));
 
 	public Creature()
 	{
-		Health = MaxHealth;
+		Health = AggregatedStats.MaxHealth;
 	}
 
 	public void SetSpells()
 	{
 		PeriodicAttacks.Clear();
-		PeriodicAttacks.AddRange(SpellDatas.Select(s => new PeriodicAttack() { NextTimeToHit = s.Periodicity, SpellData = s }));
+		PeriodicAttacks.AddRange(SpellDatas.Select(s => new PeriodicAttack() { NextTimeToHit = Random.Range(0f, s.Periodicity), SpellData = s }));
 	}
 
 	public void Feed(float deltaT)
@@ -54,16 +48,16 @@ public class Creature
 			}
 	}
 
-	public void AttackThis(Creature attacker, int attackDamage)
+	public void AttackThis(Creature attacker, SpellData attackingSpell)
 	{
-		Health -= attackDamage;
+		Health -= 2;
+		CreatureEventHub.OnCreatureHurt?.Invoke(this, 2 + "");
 		if (Health <= 0)
 		{
 			Health = 0;
 			CreatureEventHub.OnCreatureDied?.Invoke(this);
 		}
 	}
-
 }
 
 public class PeriodicAttack
@@ -73,14 +67,35 @@ public class PeriodicAttack
 	public bool HasAnimation = true;
 }
 
-public class CreatureSpell
-{
-	public string SpellId { get; set; }
-	public int MinumumLevel { get; set; }
-}
-
 public class SaveData
 {
 	public List<Creature> Creatures { get; set; }
+	public List<Creature> CreaturePool { get; set; }
 	public double Gold;
+}
+
+public class AggregatedStats
+{
+	public double MaxHealth { get; set; } = 15;
+	public double SpeedMultiplier { get; set; }
+	public double ThreatMultiplier { get; set; }
+	public int StrengthLevel { get; set; }
+	public int AgilityLevel { get; set; }
+	public int SpeedLevel { get; set; }
+}
+
+public class Buff
+{
+	public double MaxHealth { get; set; }
+	public double MaxHealthPercent { get; set; }
+	public double SpeedMultiplier { get; set; }
+	public double SpeedMultiplierPercent { get; set; }
+	public double ThreatMultiplier { get; set; }
+	public double ThreatMultiplierPercent { get; set; }
+	public int StrengthLevel { get; set; }
+	public int StrengthLevelPercent { get; set; }
+	public int AgilityLevel { get; set; }
+	public int AgilityLevelPercent { get; set; }
+	public int SpeedLevel { get; set; }
+	public int SpeedLevelPercent { get; set; }
 }

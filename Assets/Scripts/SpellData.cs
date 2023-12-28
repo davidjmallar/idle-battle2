@@ -1,6 +1,7 @@
 ﻿
 public class SpellData
 {
+	public string SpellId;
 	public string DisplayName;
 	public string DescriptionTemplate;
 

@@ -17,6 +17,6 @@ public class CreatureController : MonoBehaviour
 	{
 		AnimationController.Feed(deltaT);
 		Creature.Feed(deltaT);
-		HealthText.text = $"{Creature.MaxHealth}/{Creature.Health}";
+		HealthText.text = $"{Creature.Health}";
 	}
 }

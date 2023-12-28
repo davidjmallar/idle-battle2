@@ -17,9 +17,9 @@ namespace Assets.Scripts
 
 			var targets = GetTarget(creature);
 			var closestTargets = targets.Where(c => c.PositionInMap.x == targets.Min(t => t.PositionInMap.x)).ToList();
-			closestTargets.ForEach(t => t.AttackThis(creature, 2));
+			closestTargets.ForEach(t => t.AttackThis(creature, data));
 		}
-
+		
 		public static bool HasTarget(Creature creature)
 		{
 			return GetTarget(creature)?.Count > 0;
