@@ -65,7 +65,7 @@ public class CreatureSpawner : MonoBehaviour
 	{
 		var enemy = new Creature();
 		enemy.PositionInMap = new Vector3Int(index, Random.Range(0, -3), 0);
-		enemy.CreatureId = "sprite_sheet_pikeman_0_16x16";
+		enemy.CreatureId = "pikeman";
 		return enemy;
 	}
 }

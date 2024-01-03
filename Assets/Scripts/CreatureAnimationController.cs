@@ -52,7 +52,7 @@ public class CreatureAnimationController : MonoBehaviour
 		CreatureEventHub.OnCreatureDied += OnCreatureDie;
 		CreatureEventHub.OnCreatureCastedSpell += OnCreatureCastedSpell;
 		SpriteRenderer.enabled = true;
-		SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_0");
+		SpriteRenderer.sprite = SpriteManager.Instance.GetAnimationFrame(_creature.Data.SpriteId, 0);
 		ProgressionFeedback.Events.OnComplete.AddListener(() => StopWalk());
 	}
 
@@ -147,7 +147,7 @@ public class CreatureAnimationController : MonoBehaviour
 		if (_tNextFrame <= 0)
 		{
 			_tNextFrame = CurrentAnimationSpeed;
-			SpriteRenderer.sprite = CreatureAtlas.GetSprite($"{_creature.Data.SpriteId}_{(int)_creature.State + _frameIndex++}");
+			SpriteRenderer.sprite = SpriteManager.Instance.GetAnimationFrame($"{_creature.Data.SpriteId}", (int)_creature.State + _frameIndex++);
 			if (_frameIndex > 3)
 			{
 				EndOfAnimationCycle();

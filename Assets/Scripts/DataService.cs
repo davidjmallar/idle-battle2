@@ -26,11 +26,11 @@ namespace Assets.Scripts
 			return new SaveData()
 			{
 				Creatures = new List<Creature> {
-						new Creature(){PositionInGroup = new Vector3Int(0, 0, 0), CreatureId = "sprite_sheet_angel_0_16x16", AvailableSpells = { "asd" } },
-						new Creature(){PositionInGroup = new Vector3Int(0, -2, 0), CreatureId = "sprite_sheet_monk_0_16x16", AvailableSpells = { "asd" }},
-						new Creature(){PositionInGroup = new Vector3Int(2, -1, 0), CreatureId = "sprite_sheet_paladin_0_16x16", AvailableSpells = { "asd","asd" }},
-						new Creature(){PositionInGroup = new Vector3Int(1, 0, 0), CreatureId = "sprite_sheet_pikeman_0_16x16", AvailableSpells = { "asd" } },
-						new Creature(){PositionInGroup = new Vector3Int(1, -2, 0), CreatureId = "sprite_sheet_swordsman_0_16x16", AvailableSpells = { "asd" } },
+						new Creature(){PositionInGroup = new Vector3Int(0, 0, 0), CreatureId = "angel", AvailableSpells = { "asd" } },
+						new Creature(){PositionInGroup = new Vector3Int(0, -2, 0), CreatureId = "monk", AvailableSpells = { "asd" }},
+						new Creature(){PositionInGroup = new Vector3Int(2, -1, 0), CreatureId = "paladin", AvailableSpells = { "asd","asd" }},
+						new Creature(){PositionInGroup = new Vector3Int(1, 0, 0), CreatureId = "pikeman", AvailableSpells = { "asd" } },
+						new Creature(){PositionInGroup = new Vector3Int(1, -2, 0), CreatureId = "swordsman", AvailableSpells = { "asd" } },
 					},
 				Gold = 1000
 			};
