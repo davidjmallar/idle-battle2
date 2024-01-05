@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class DragAndDropSlot : MonoBehaviour, IDropHandler
 {
 	public DragableItem Item { get; set; }
+
 	public void OnDrop(PointerEventData eventData)
 	{
 		Debug.Log("Drop");

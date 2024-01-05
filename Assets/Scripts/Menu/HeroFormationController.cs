@@ -1,6 +1,7 @@
 using Assets.Scripts;
 using Sirenix.OdinInspector;
-using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,17 +17,13 @@ public class HeroFormationController : MonoBehaviour
 
 	private SaveData Data => DataService.GetSaveData();
 
-
-
-	// Start is called before the first frame update
-	void Start()
-    {
-        Debug.Log("OnStart");
-	}
+	[Required]
+	public Transform DropSlotParent;
+	private List<DragAndDropSlot> DropSlots;
 
 	private void OnEnable()
 	{
-		Debug.Log("OnEnable");
+		TryPopulate();
 	}
 
 	private void OnDisable()
@@ -38,9 +35,15 @@ public class HeroFormationController : MonoBehaviour
         Debug.Log("OnDestroy");
 	}
 
-	// Update is called once per frame
-	void Update()
-    {
-        
-    }
+	private void TryPopulate()
+	{
+		if (DropSlots == null || DropSlots.Count == 0)
+		{
+			DropSlots = DropSlotParent.GetComponentsInChildren<DragAndDropSlot>().ToList();
+			//DropSlots.ForEach(s=>s.OnDropLanded);
+		}
+	}
+
+	//private void DropLanded
+
 }
