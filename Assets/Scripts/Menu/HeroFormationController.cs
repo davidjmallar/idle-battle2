@@ -19,7 +19,7 @@ public class HeroFormationController : MonoBehaviour
 
 	[Required]
 	public Transform DropSlotParent;
-	private List<DragAndDropSlot> DropSlots;
+	private List<HeroSlot> DropSlots;
 
 	private void OnEnable()
 	{
@@ -39,7 +39,12 @@ public class HeroFormationController : MonoBehaviour
 	{
 		if (DropSlots == null || DropSlots.Count == 0)
 		{
-			DropSlots = DropSlotParent.GetComponentsInChildren<DragAndDropSlot>().ToList();
+			DropSlots = DropSlotParent.GetComponentsInChildren<HeroSlot>().ToList();
+			Data.Creatures.ForEach(c => {
+				var slotToPutHero = DropSlots.FirstOrDefault(s => s.Position == c.PositionInGroup);
+				var heroItem = Instantiate(AvatarTemplate, slotToPutHero.transform);
+				heroItem.Setup(c);
+			});
 			//DropSlots.ForEach(s=>s.OnDropLanded);
 		}
 	}

@@ -10,7 +10,12 @@ public class SpriteManager : MonoBehaviour
     [Required]
     public SpriteAtlas Atlas;
 
-	public Sprite GetAnimationFrame(string spriteId, int animationIndex) => Atlas.GetSprite($"sprite_sheet_{spriteId}_0_16x16_{animationIndex}");
+	public Sprite GetAnimationFrame(string spriteId, int animationIndex)
+	{
+			var x = Atlas.GetSprite($"sprite_sheet_{spriteId}_0_16x16_{animationIndex}");
+		return x;
+	}
+
 	public Sprite GetAvatar16(string spriteId) => Atlas.GetSprite($"icon_{spriteId}_16x16");
 	public Sprite GetAvatar32(string spriteId) => Atlas.GetSprite($"icon_{spriteId}_32x32");
 }

@@ -39,4 +39,6 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 		transform.GetComponents<Image>().ForEach(x => x.raycastTarget = state);
 		transform.GetComponentsInChildren<Image>().ForEach(x => x.raycastTarget = state);
 	}
+
+
 }

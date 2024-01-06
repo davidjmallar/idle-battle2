@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragAndDropSlot : MonoBehaviour, IDropHandler
+public abstract class DragAndDropSlot : MonoBehaviour
 {
-	public DragableItem Item { get; set; }
+	[HideInInspector] public DragableItem Item { get; set; }
 
-	public void OnDrop(PointerEventData eventData)
+	public void SnapOnDrop(PointerEventData eventData)
 	{
 		Debug.Log("Drop");
 		if (transform.childCount == 0)
