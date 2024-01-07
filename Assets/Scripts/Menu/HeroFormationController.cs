@@ -15,7 +15,7 @@ public class HeroFormationController : MonoBehaviour
 	public Button AddButtonTemplate;
 
 
-	private SaveData Data => DataService.GetSaveData();
+	private SaveData Data => DataService.SaveData;
 
 	[Required]
 	public Transform DropSlotParent;
@@ -45,10 +45,6 @@ public class HeroFormationController : MonoBehaviour
 				var heroItem = Instantiate(AvatarTemplate, slotToPutHero.transform);
 				heroItem.Setup(c);
 			});
-			//DropSlots.ForEach(s=>s.OnDropLanded);
 		}
 	}
-
-	//private void DropLanded
-
 }

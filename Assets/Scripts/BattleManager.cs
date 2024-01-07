@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+	public static BattleManager Instance { get; private set; }
+	private void Awake() => Instance = this;
+
 	[Required]
 	public CreatureSpawner CreatureSpawner;
 	[Required]
@@ -24,17 +27,19 @@ public class BattleManager : MonoBehaviour
 		CameraController.Proceed();
 		TileSpawnerManager.Instance.Progress();
 	}
-
-	private void Start()
+	public void Start()
 	{
+		TileSpawnerManager.Restart();
 		for (int i = 0; i < GlobalConstants.MapWidth + 2; i++)
 		{
 			TileSpawnerManager.Instance.Progress();
 		}
+		CameraController.ResetCamera();
 		CreatureSpawner.SpawnDummyHeroTeam();
 		CreatureSpawner.SpawnDummyEnemy();
-
+		//CreatureSpawner.ProceedHeroTeam();
 	}
+
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))

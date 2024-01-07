@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
 	//public float TileHeight { get; private set; }
 	public int TileWidth => GlobalConstants.MapWidth;
 	public MMF_Player ProgressionFeedback;
+	public Vector3 StartPosition { get; private set; }
 	//private static CameraController _instance;
 	//public static CameraController Instance => _instance;
 
@@ -26,13 +27,21 @@ public class CameraController : MonoBehaviour
 	//}
 
 	[Button]
+	public void ResetCamera()
+	{
+		transform.position = StartPosition;
+	}
+	[Button]
 	public void Proceed()
 	{
 		var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
 		positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
 		ProgressionFeedback.PlayFeedbacks();
 	}
-
+	private void Awake()
+	{
+		StartPosition = transform.position;
+	}
 	private void Start()
 	{
 		_camera = GetComponent<Camera>();

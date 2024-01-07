@@ -6,16 +6,20 @@ using UnityEngine;
 
 public class CreatureSpawner : MonoBehaviour
 {
+	public static CreatureSpawner Instance { get; private set; }
+	private void Awake() => Instance = this;
+
 	public CreatureController CreatureAnimationControllerTemplate;
 	public Transform CreatureParent;
 
 	private List<CreatureController> Heroes => CreatureMap.Heroes;
 	private List<CreatureController> Foes => CreatureMap.Foes;
 	private int _index = 6;
+
 	[Button]
 	public void SpawnDummyHeroTeam()
 	{
-		SpawnHeroTeam(DataService.GetSaveData().Creatures);
+		SpawnHeroTeam(DataService.SaveData.Creatures);
 	}
 	[Button]
 	public void SpawnDummyEnemy()
@@ -41,9 +45,12 @@ public class CreatureSpawner : MonoBehaviour
 
 	public void SpawnHeroTeam(List<Creature> Creatures)
 	{
+		_index = 6;
+		CreatureMap.ResetMap();
 		foreach (var creature in Creatures)
 		{
 			Heroes.Add(SpawnCreature(creature, creature.PositionInGroup, isEnemy: false));
+			creature.State = AnimationState.Idle;
 			creature.SetSpells();
 		}
 	}

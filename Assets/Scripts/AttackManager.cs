@@ -14,12 +14,11 @@ namespace Assets.Scripts
 
 		private void OnCreatureLandedSpell(Creature creature, SpellData data)
 		{
-
 			var targets = GetTarget(creature);
 			var closestTargets = targets.Where(c => c.PositionInMap.x == targets.Min(t => t.PositionInMap.x)).ToList();
 			closestTargets.ForEach(t => t.AttackThis(creature, data));
 		}
-		
+
 		public static bool HasTarget(Creature creature)
 		{
 			return GetTarget(creature)?.Count > 0;

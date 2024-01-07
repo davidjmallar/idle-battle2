@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7197445922984762516}
-  - component: {fileID: 4894425156081033146}
+  - component: {fileID: 5867880068575401609}
   m_Layer: 5
   m_Name: DragAndDropHero
   m_TagString: Untagged
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4894425156081033146
+--- !u!114 &5867880068575401609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,9 +49,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1101203587495259405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa813e45d62ee73409c2fb4eb2c2e20e, type: 3}
+  m_Script: {fileID: 11500000, guid: fe445e4fcc0027345a6c0bdc8d9a1ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RectTransform: {fileID: 0}
+  AvatarImage: {fileID: 5478875540561536425}
 --- !u!1 &5478875540561536428
 GameObject:
   m_ObjectHideFlags: 0

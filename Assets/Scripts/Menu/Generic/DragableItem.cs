@@ -7,7 +7,7 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 {
 	public Transform ParentAfterDrag { get; set; }
 	public DragAndDropSlot Slot { get; set; }
-	public RectTransform RectTransform;
+	[HideInInspector] public RectTransform RectTransform;
 
 	public void Start()
 	{
