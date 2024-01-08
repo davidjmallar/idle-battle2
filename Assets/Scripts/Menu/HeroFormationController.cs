@@ -26,6 +26,7 @@ public class HeroFormationController : MonoBehaviour
 		TryPopulate();
 	}
 
+
 	private void OnDisable()
 	{
         Debug.Log("OnDisable");

@@ -87,11 +87,7 @@ public class CreatureAnimationController : MonoBehaviour
 	[Button]
 	public void Proceed()
 	{
-		StartWalk();
-		var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
-		positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
-		_creature.PositionInMap = new Vector3Int(_creature.PositionInMap.x + 1, _creature.PositionInMap.y, 0);
-		ProgressionFeedback.PlayFeedbacks();
+		StartCoroutine(ProceedDelay());
 	}
 
 
@@ -193,6 +189,15 @@ public class CreatureAnimationController : MonoBehaviour
 		CreatureMap.Foes.RemoveAll(c => c.Creature == _creature);
 		Destroy(gameObject);
 		//CreatureEventHub.OnCreatureDisappeared?.Invoke(_creature);
+	}
+	IEnumerator ProceedDelay()
+	{
+		yield return new WaitForEndOfFrame();
+		StartWalk();
+		var positionFeedback = ProgressionFeedback.GetFeedbackOfType<MMF_Position>();
+		positionFeedback.DestinationPosition = transform.localPosition + Vector3.right;
+		_creature.PositionInMap = new Vector3Int(_creature.PositionInMap.x + 1, _creature.PositionInMap.y, 0);
+		ProgressionFeedback.PlayFeedbacks();
 	}
 }
 

@@ -13,7 +13,7 @@ public class HeroSlot : DragAndDropSlot, IDropHandler
 		SnapOnDrop(eventData);
 		HeroController.Creature.PositionInGroup = Position; // TODO
 		BattleManager.Instance.Start();
-		
+
 		// Must start manually or delayed? Not this shit again.
 		//CreatureSpawner.Instance.ProceedHeroTeam();
 	}
