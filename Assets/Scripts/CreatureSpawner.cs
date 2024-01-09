@@ -31,6 +31,7 @@ public class CreatureSpawner : MonoBehaviour
 	[Button]
 	public void ProceedHeroTeam()
 	{
+		Debug.Log("Proceed hero team");
 		Heroes.ForEach(h => h.AnimationController.Proceed());
 	}
 	public bool CanProceed()

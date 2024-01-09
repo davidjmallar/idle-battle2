@@ -7,7 +7,6 @@ public abstract class DragAndDropSlot : MonoBehaviour
 
 	public void SnapOnDrop(PointerEventData eventData)
 	{
-		Debug.Log("Drop");
 		if (transform.childCount == 0)
 		{
 			var dropped = eventData.pointerDrag;

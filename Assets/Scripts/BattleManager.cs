@@ -7,6 +7,8 @@ public class BattleManager : MonoBehaviour
 	public static BattleManager Instance { get; private set; }
 	private void Awake() => Instance = this;
 
+	private bool skipFrame = true;
+
 	[Required]
 	public CreatureSpawner CreatureSpawner;
 	[Required]
@@ -42,6 +44,11 @@ public class BattleManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (skipFrame)
+		{
+			skipFrame = false;
+			return;
+		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			OnProgression?.Invoke();
