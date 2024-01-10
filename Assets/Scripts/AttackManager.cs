@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts
 {
@@ -15,7 +16,7 @@ namespace Assets.Scripts
 		private void OnCreatureLandedSpell(Creature creature, SpellData data)
 		{
 			var targets = GetTarget(creature);
-			var closestTargets = targets.Where(c => c.PositionInMap.x == targets.Min(t => t.PositionInMap.x)).ToList();
+			var closestTargets = GetClosestTarget(targets);
 			closestTargets.ForEach(t => t.AttackThis(creature, data));
 		}
 
@@ -26,7 +27,18 @@ namespace Assets.Scripts
 
 		private static List<Creature> GetTarget(Creature creature)
 		{
-			return CreatureMap.Foes.Where(c => c.Creature.Health > 0).Select(c => c.Creature).ToList();
+			if (creature.IsHero) // This is the attacker
+				return CreatureMap.Foes.Where(c => c.Creature.Health > 0).Select(c => c.Creature).ToList();
+			return CreatureMap.Heroes.Where(c => c.Creature.Health > 0).Select(c => c.Creature).ToList();
 		}
+
+		private static List<Creature> GetClosestTarget(List<Creature> creature)
+		{
+			if (!creature.First().IsHero) // this is target, not the attacker
+				return creature.Where(c => c.PositionInMap.x == creature.Min(t => t.PositionInMap.x)).ToList();
+			return creature.Where(c => c.PositionInMap.x == creature.Max(t => t.PositionInMap.x)).ToList();
+		}
+
+
 	}
 }

@@ -9,11 +9,11 @@ namespace Assets.Scripts
 		private static SaveData _saveData = new SaveData()
 		{
 			Creatures = new List<Creature> {
-						new Creature(){PositionInGroup = new Vector3Int(0, 0, 0), CreatureId = "angel", AvailableSpells = { "asd" } },
-						new Creature(){PositionInGroup = new Vector3Int(0, -2, 0), CreatureId = "monk", AvailableSpells = { "asd" }},
-						new Creature(){PositionInGroup = new Vector3Int(2, -1, 0), CreatureId = "paladin", AvailableSpells = { "asd","asd" }},
-						new Creature(){PositionInGroup = new Vector3Int(1, 0, 0), CreatureId = "pikeman", AvailableSpells = { "asd" } },
-						new Creature(){PositionInGroup = new Vector3Int(1, -2, 0), CreatureId = "swordsman", AvailableSpells = { "asd" } },
+						new Creature(){PositionInGroup = new Vector3Int(0, 0, 0), CreatureId = "angel", AvailableSpells = { "asd" }, IsHero = true },
+						new Creature(){PositionInGroup = new Vector3Int(0, -2, 0), CreatureId = "monk", AvailableSpells = { "asd" }, IsHero = true},
+						//new Creature(){PositionInGroup = new Vector3Int(2, -1, 0), CreatureId = "paladin", AvailableSpells = { "asd","asd" }, IsHero = true},
+						//new Creature(){PositionInGroup = new Vector3Int(1, 0, 0), CreatureId = "pikeman", AvailableSpells = { "asd" }, IsHero = true },
+						//new Creature(){PositionInGroup = new Vector3Int(1, -2, 0), CreatureId = "swordsman", AvailableSpells = { "asd" }, IsHero = true },
 					},
 			Gold = 1000
 		};

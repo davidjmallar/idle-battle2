@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -53,11 +54,26 @@ public class BattleManager : MonoBehaviour
 		{
 			OnProgression?.Invoke();
 		}
-		if (CreatureSpawner.CanProceed())
+		if (IsHeroesDead())
+		{
+			Start();
+			return;
+		}
+		if (CanProceed())
 		{
 			Proceed();
 		}
-		CreatureSpawner.FeedCreatures(Time.deltaTime);
+		FeedCreatures(Time.deltaTime);
 	}
+
+	public void FeedCreatures(float deltaT)
+	{
+		CreatureMap.Heroes.ForEach(h => h.Feed(deltaT));
+		CreatureMap.Foes.ForEach(h => h.Feed(deltaT));
+	}
+
+	public bool CanProceed() => CreatureMap.Foes.Any(c => c.Creature.State != AnimationState.Dying) && (CreatureMap.Heroes.All(c => c.Creature.State != AnimationState.Walk) && CreatureMap.Heroes.All(c => (c.Creature.PositionInMap.x + 1) < CreatureMap.Foes.Where(c => c.Creature.State != AnimationState.Dying).Min(f => f.Creature.PositionInMap.x)));
+
+	public bool IsHeroesDead() => CreatureMap.Heroes.All(c => c.Creature.Health <= 0);
 
 }

@@ -22,6 +22,7 @@ public class Creature
 	public AggregatedStats AggregatedStats { get; set; } = new AggregatedStats();
 	public List<PeriodicAttack> PeriodicAttacks { get; } = new List<PeriodicAttack>();
 	public List<SpellData> SpellDatas => AvailableSpells.ConvertAll(s => DataService.GetSpell(s));
+	public bool IsHero { get; set; }
 
 	public Creature()
 	{
