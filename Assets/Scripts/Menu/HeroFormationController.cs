@@ -14,6 +14,7 @@ public class HeroFormationController : MonoBehaviour
 	[Required]
 	public Button AddButtonTemplate;
 
+	[Required] public ToggleGroup ToggleGroup;
 
 	private SaveData Data => DataService.SaveData;
 
@@ -39,10 +40,11 @@ public class HeroFormationController : MonoBehaviour
 		if (DropSlots == null || DropSlots.Count == 0)
 		{
 			DropSlots = DropSlotParent.GetComponentsInChildren<HeroSlot>().ToList();
-			Data.Creatures.ForEach(c => {
+			Data.Creatures.ForEach(c =>
+			{
 				var slotToPutHero = DropSlots.FirstOrDefault(s => s.Position == c.PositionInGroup);
 				var heroItem = Instantiate(AvatarTemplate, slotToPutHero.transform);
-				heroItem.Setup(c);
+				heroItem.Setup(c, ToggleGroup);
 			});
 		}
 	}

@@ -8,7 +8,9 @@ public class SpriteManager : MonoBehaviour
     private void Awake() => Instance = this;
 
     [Required]
-    public SpriteAtlas Atlas;
+	public SpriteAtlas Atlas;
+    [Required]
+    public SpriteAtlas IconAtlas;
 
 	public Sprite GetAnimationFrame(string spriteId, int animationIndex)
 	{
@@ -16,6 +18,6 @@ public class SpriteManager : MonoBehaviour
 		return x;
 	}
 
-	public Sprite GetAvatar16(string spriteId) => Atlas.GetSprite($"icon_{spriteId}_16x16");
-	public Sprite GetAvatar32(string spriteId) => Atlas.GetSprite($"icon_{spriteId}_32x32");
+	public Sprite GetAvatar16(string spriteId) => IconAtlas.GetSprite($"icon_{spriteId}_0_16x16");
+	public Sprite GetAvatar32(string spriteId) => IconAtlas.GetSprite($"icon_{spriteId}_0_32x32");
 }
