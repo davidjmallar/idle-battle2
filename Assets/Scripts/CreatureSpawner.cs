@@ -65,7 +65,7 @@ public class CreatureSpawner : MonoBehaviour
 		var enemy = new Creature();
 		enemy.PositionInMap = new Vector3Int(index, Random.Range(0, -3), 0);
 		enemy.CreatureId = "pikeman";
-		enemy.AvailableSpells = new List<string>() { "asd" };
+		enemy.AvailableSpells = new List<CreatureSpell>() { new() { SpellId = "asd" } };
 		enemy.IsHero = false;
 		enemy.SetSpells();
 		return enemy;

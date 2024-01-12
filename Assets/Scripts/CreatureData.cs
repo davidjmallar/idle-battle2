@@ -4,11 +4,11 @@ public class CreatureData
 {
 	public string DisplayName;
 	public string SpriteId;
-	public List<CreatureSpells> Spells;
+	public List<CreatureSpellData> Spells;
 	public Buff CharacterBonus;
 }
 
-public class CreatureSpells
+public class CreatureSpellData
 {
 	public string SpellId;
 	public int LevelRequirement;

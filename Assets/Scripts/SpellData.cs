@@ -2,6 +2,7 @@
 public class SpellData
 {
 	public string SpellId;
+	public string SpellIconId;
 	public string DisplayName;
 	public string DescriptionTemplate;
 

@@ -12,7 +12,7 @@ public class Creature
 	[OdinSerialize] public int StrengthLevel { get; set; }
 	[OdinSerialize] public int AgilityLevel { get; set; }
 	[OdinSerialize] public int SpeedLevel { get; set; }
-	[OdinSerialize] public List<string> AvailableSpells { get; set; } = new List<string>();
+	[OdinSerialize] public List<CreatureSpell> AvailableSpells { get; set; } = new List<CreatureSpell>();
 
 	public AnimationState State;
 	public CreatureData Data => DataService.GetCreature(CreatureId);
@@ -21,7 +21,7 @@ public class Creature
 	public double Health { get; set; }
 	public AggregatedStats AggregatedStats { get; set; } = new AggregatedStats();
 	public List<PeriodicAttack> PeriodicAttacks { get; } = new List<PeriodicAttack>();
-	public List<SpellData> SpellDatas => AvailableSpells.ConvertAll(s => DataService.GetSpell(s));
+	public List<SpellData> SpellDatas => AvailableSpells.ConvertAll(s => DataService.GetSpell(s.SpellId));
 	public bool IsHero { get; set; }
 
 	public Creature()
@@ -99,4 +99,13 @@ public class Buff
 	public int AgilityLevelPercent { get; set; }
 	public int SpeedLevel { get; set; }
 	public int SpeedLevelPercent { get; set; }
+}
+
+[System.Serializable]
+public class CreatureSpell
+{
+	[OdinSerialize] public string SpellId { get; set; }
+	[OdinSerialize] public bool IsAvailable { get; set; }
+	[OdinSerialize] public bool IsSelected { get; set; }
+	[OdinSerialize] public int Order { get; set; }
 }
