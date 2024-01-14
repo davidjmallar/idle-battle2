@@ -45,12 +45,11 @@ public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerU
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		if (_spell != null)
+		if (_spell != null && _spell.IsAvailable)
 		{
 			_spell.IsSelected = !_spell.IsSelected;
 			_creature.SetSpells();
 		}
-		Debug.Log("Spell Clicked");
 	}
 
 	public void OnPointerDown(PointerEventData eventData)

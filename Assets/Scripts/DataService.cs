@@ -46,8 +46,8 @@ namespace Assets.Scripts
 		{
 			return new CreatureSpell()
 			{
-				IsAvailable = true,
-				IsSelected = true,
+				IsAvailable = i < 3,
+				IsSelected = i < 2,
 				Order = i,
 				SpellId = $"{i}",
 			};

@@ -1,5 +1,4 @@
 ﻿using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,20 @@ public class HeroDetailsController : MonoBehaviour
 {
 	[FoldoutGroup("Templates"), Required] public SpellIconController SpellSlot;
 	[Required] public Image Avatar;
+
 	[Required] public Transform SpellSlotsParent;
+
+	[Required] public Button MgtLearnButton;
+	[Required] public Text MgtLearnButtonText;
+	[Required] public Button AgiLearnButton;
+	[Required] public Text AgiLearnButtonText;
+	[Required] public Button FocLearnButton;
+	[Required] public Text FocLearnButtonText;
+
+	[Required] public Transform LearningTransform;
+	[Required] public Text LearningText;
+	[Required] public Text QuickLearnButtonText;
+	[Required] public Button QuickLearnButton;
 
 	public void SelectHero(Creature creature)
 	{

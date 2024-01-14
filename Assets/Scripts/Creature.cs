@@ -1,18 +1,24 @@
 using Assets.Scripts;
 using Sirenix.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class Creature
 {
 	[OdinSerialize] public string CreatureId { get; set; }
 	[OdinSerialize] public int Level { get; set; }
 	[OdinSerialize] public Vector3Int PositionInGroup { get; set; }
-	[OdinSerialize] public int StrengthLevel { get; set; }
+	[OdinSerialize] public int MightLevel { get; set; }
+	[OdinSerialize] public DateTime MightLevelLearning { get; set; }
 	[OdinSerialize] public int AgilityLevel { get; set; }
-	[OdinSerialize] public int SpeedLevel { get; set; }
+	[OdinSerialize] public DateTime AgilityLevelLearning { get; set; }
+	[OdinSerialize] public int FocusLevel { get; set; }
+	[OdinSerialize] public DateTime FocusLevelLearning { get; set; }
 	[OdinSerialize] public List<CreatureSpell> AvailableSpells { get; set; } = new List<CreatureSpell>();
+
 
 	public AnimationState State;
 	public CreatureData Data => DataService.GetCreature(CreatureId);
@@ -31,7 +37,7 @@ public class Creature
 	public void SetSpells()
 	{
 		PeriodicAttacks.Clear();
-		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
+		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = UnityEngine.Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
 		Debug.Log($"Added {newAttacks.Count()} to the creature {CreatureId}");
 		PeriodicAttacks.AddRange(newAttacks);
 	}
@@ -81,9 +87,9 @@ public class AggregatedStats
 	public double MaxHealth { get; set; } = 15;
 	public double SpeedMultiplier { get; set; }
 	public double ThreatMultiplier { get; set; }
-	public int StrengthLevel { get; set; }
+	public int MightLevel { get; set; }
 	public int AgilityLevel { get; set; }
-	public int SpeedLevel { get; set; }
+	public int FocusLevel { get; set; }
 }
 
 public class Buff
@@ -94,12 +100,12 @@ public class Buff
 	public double SpeedMultiplierPercent { get; set; }
 	public double ThreatMultiplier { get; set; }
 	public double ThreatMultiplierPercent { get; set; }
-	public int StrengthLevel { get; set; }
-	public int StrengthLevelPercent { get; set; }
+	public int MightLevel { get; set; }
+	public int MightLevelPercent { get; set; }
 	public int AgilityLevel { get; set; }
 	public int AgilityLevelPercent { get; set; }
-	public int SpeedLevel { get; set; }
-	public int SpeedLevelPercent { get; set; }
+	public int FocusLevel { get; set; }
+	public int FocusLevelPercent { get; set; }
 }
 
 [System.Serializable]

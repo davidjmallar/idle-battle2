@@ -11,9 +11,9 @@ public class SpellData
 	public int Range;
 	public int EffectArea;
 
-	public int StrMultiplier;
+	public int MgtMultiplier;
 	public int AgiMultiplier;
-	public int SpeMultiplier;
+	public int FocMultiplier;
 
 	// Threat
 	// Dam/Heal? -> need creature too
