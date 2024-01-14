@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpellIconAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 226533921, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 907238691, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1291891623, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1801077784, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -666988983, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1765766044, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1453936691, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1369940099, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1145444238, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -315044107, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -2090340834, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1723374445, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -562408306, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1680693345, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 169817143, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1704923708, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 641991619, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1548779821, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 2145151326, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 992674092, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -541400482, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1877593158, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1375978560, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 366259496, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 71951809, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 544607499, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1994812439, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1736027454, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1832230215, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -484511428, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 729554887, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1563688839, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1775097817, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1556980170, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -504508986, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1850991972, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1366264215, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1409101625, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -84398390, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 2123329573, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 676082172, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 1196090069, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 875608710, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1368369679, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -389849317, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -749271680, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 772632718, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1632899787, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -239979292, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -124431646, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 82396686, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -996346498, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -1960864688, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: 173571606, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  - {fileID: -249842644, guid: d4541bea94cfb694bbb29382e1bb494c, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - MagicSpellsIcons_8
+  - MagicSpellsIcons_9
+  - MagicSpellsIcons_0
+  - MagicSpellsIcons_1
+  - MagicSpellsIcons_2
+  - MagicSpellsIcons_3
+  - MagicSpellsIcons_4
+  - MagicSpellsIcons_5
+  - MagicSpellsIcons_6
+  - MagicSpellsIcons_7
+  - MagicSpellsIcons_31
+  - MagicSpellsIcons_30
+  - MagicSpellsIcons_33
+  - MagicSpellsIcons_32
+  - MagicSpellsIcons_44
+  - MagicSpellsIcons_35
+  - MagicSpellsIcons_45
+  - MagicSpellsIcons_34
+  - MagicSpellsIcons_46
+  - MagicSpellsIcons_37
+  - MagicSpellsIcons_47
+  - MagicSpellsIcons_36
+  - MagicSpellsIcons_40
+  - MagicSpellsIcons_39
+  - MagicSpellsIcons_41
+  - MagicSpellsIcons_38
+  - MagicSpellsIcons_42
+  - MagicSpellsIcons_43
+  - MagicSpellsIcons_48
+  - MagicSpellsIcons_49
+  - MagicSpellsIcons_28
+  - MagicSpellsIcons_29
+  - MagicSpellsIcons_26
+  - MagicSpellsIcons_27
+  - MagicSpellsIcons_24
+  - MagicSpellsIcons_25
+  - MagicSpellsIcons_22
+  - MagicSpellsIcons_23
+  - MagicSpellsIcons_20
+  - MagicSpellsIcons_21
+  - MagicSpellsIcons_54
+  - MagicSpellsIcons_53
+  - MagicSpellsIcons_52
+  - MagicSpellsIcons_19
+  - MagicSpellsIcons_51
+  - MagicSpellsIcons_18
+  - MagicSpellsIcons_50
+  - MagicSpellsIcons_13
+  - MagicSpellsIcons_12
+  - MagicSpellsIcons_11
+  - MagicSpellsIcons_10
+  - MagicSpellsIcons_17
+  - MagicSpellsIcons_16
+  - MagicSpellsIcons_15
+  - MagicSpellsIcons_14
+  m_RenderDataMap: {}
+  m_Tag: SpellIconAtlas
+  m_IsVariant: 0

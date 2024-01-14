@@ -27,6 +27,7 @@ namespace Assets.Scripts
 
 		private static List<Creature> GetTarget(Creature creature)
 		{
+			if (creature == null) return new List<Creature>();
 			if (creature.IsHero) // This is the attacker
 				return CreatureMap.Foes.Where(c => c.Creature.Health > 0).Select(c => c.Creature).ToList();
 			return CreatureMap.Heroes.Where(c => c.Creature.Health > 0).Select(c => c.Creature).ToList();
@@ -34,6 +35,7 @@ namespace Assets.Scripts
 
 		private static List<Creature> GetClosestTarget(List<Creature> creature)
 		{
+			if (!creature.Any()) return new List<Creature>();
 			if (!creature.First().IsHero) // this is target, not the attacker
 				return creature.Where(c => c.PositionInMap.x == creature.Min(t => t.PositionInMap.x)).ToList();
 			return creature.Where(c => c.PositionInMap.x == creature.Max(t => t.PositionInMap.x)).ToList();

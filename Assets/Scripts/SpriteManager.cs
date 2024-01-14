@@ -22,5 +22,7 @@ public class SpriteManager : MonoBehaviour
 
 	public Sprite GetAvatar16(string spriteId) => IconAtlas.GetSprite($"icon_{spriteId}_0_16x16");
 	public Sprite GetAvatar32(string spriteId) => IconAtlas.GetSprite($"icon_{spriteId}_0_32x32");
-	public Sprite GetSpellImage(string spriteId) => SpellIconAtlas.GetSprite($"{spriteId}");
+
+
+	public Sprite GetSpellImage(string spriteId) => SpellIconAtlas.GetSprite($"MagicSpellsIcons_{spriteId}");
 }

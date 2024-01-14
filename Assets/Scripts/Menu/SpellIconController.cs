@@ -17,27 +17,49 @@ public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerU
 	{
 		_creature = creature;
 		_spell = creatureSpell;
-		SpellIcon.sprite = SpriteManager.Instance.GetSpellImage(creatureSpell.SpellId);
+
+		if (creatureSpell != null)
+			SpellIcon.sprite = SpriteManager.Instance.GetSpellImage(creatureSpell.SpellId);
+	}
+	[Button]
+	public void EnableSelection()
+	{
+		SelectionTransform.gameObject.SetActive(true);
+	}
+	[Button]
+	public void EnableLock()
+	{
+		AvailibityTransform.gameObject.SetActive(true);
+	}
+
+	private void Update()
+	{
+		UpdateModel();
 	}
 
 	public void UpdateModel()
 	{
-		AvailibityTransform.gameObject.SetActive(!_spell.IsAvailable);
-		SelectionTransform.gameObject.SetActive(!_spell.IsSelected);
+		AvailibityTransform.gameObject.SetActive(!(_spell?.IsAvailable ?? false));
+		SelectionTransform.gameObject.SetActive(_spell?.IsSelected ?? false);
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		_spell.IsSelected = !_spell.IsSelected;
+		if (_spell != null)
+		{
+			_spell.IsSelected = !_spell.IsSelected;
+			_creature.SetSpells();
+		}
+		Debug.Log("Spell Clicked");
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		throw new System.NotImplementedException();
+		//throw new System.NotImplementedException();
 	}
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
-		throw new System.NotImplementedException();
+		//throw new System.NotImplementedException();
 	}
 }

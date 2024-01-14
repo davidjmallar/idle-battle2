@@ -21,7 +21,6 @@ public class Creature
 	public double Health { get; set; }
 	public AggregatedStats AggregatedStats { get; set; } = new AggregatedStats();
 	public List<PeriodicAttack> PeriodicAttacks { get; } = new List<PeriodicAttack>();
-	public List<SpellData> SpellDatas => AvailableSpells.ConvertAll(s => DataService.GetSpell(s.SpellId));
 	public bool IsHero { get; set; }
 
 	public Creature()
@@ -32,7 +31,9 @@ public class Creature
 	public void SetSpells()
 	{
 		PeriodicAttacks.Clear();
-		PeriodicAttacks.AddRange(SpellDatas.Select(s => new PeriodicAttack() { NextTimeToHit = Random.Range(0f, s.Periodicity), SpellData = s }));
+		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
+		Debug.Log($"Added {newAttacks.Count()} to the creature {CreatureId}");
+		PeriodicAttacks.AddRange(newAttacks);
 	}
 
 	public void Feed(float deltaT)
@@ -108,4 +109,5 @@ public class CreatureSpell
 	[OdinSerialize] public bool IsAvailable { get; set; }
 	[OdinSerialize] public bool IsSelected { get; set; }
 	[OdinSerialize] public int Order { get; set; }
+	public SpellData Data => DataService.GetSpell(SpellId);
 }
