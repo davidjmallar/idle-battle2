@@ -12,6 +12,10 @@ public class HeroDetailsController : MonoBehaviour
 
 	[Required] public Transform SpellSlotsParent;
 
+	[Required] public Text MgtText;
+	[Required] public Text AgiText;
+	[Required] public Text FocText;
+
 	[Required] public Button MgtLearnButton;
 	[Required] public Text MgtLearnButtonText;
 	[Required] public Button AgiLearnButton;
@@ -40,6 +44,7 @@ public class HeroDetailsController : MonoBehaviour
 	}
 	public void Update()
 	{
+		float feed = Time.deltaTime;
 		if (_creature == null) return;
 		var mgtPrice = PriceManager.GetStatPrice(_creature.MightLevel);
 		var agiPrice = PriceManager.GetStatPrice(_creature.AgilityLevel);
@@ -48,25 +53,47 @@ public class HeroDetailsController : MonoBehaviour
 		MgtLearnButtonText.text = $"{mgtPrice}";
 		AgiLearnButtonText.text = $"{agiPrice}";
 		FocLearnButtonText.text = $"{focPrice}";
+		MgtText.text = $"MGT: {_creature.AggregatedStats.MightLevel}";
+		AgiText.text = $"AGI: {_creature.AggregatedStats.AgilityLevel}";
+		FocText.text = $"FOC: {_creature.AggregatedStats.FocusLevel}";
 
 		// Use nullable datetimes and if it reaches below utcnow then add the bonus and null it!
 
-		if (_creature.MightLevelLearning > DateTime.UtcNow)
+		if (_creature.MightLevelLearning != null && _creature.MightLevelLearning > DateTime.UtcNow)
 		{
 			LearningTransform.gameObject.SetActive(true);
-			LearningText.text = $"Learning Might {_creature.MightLevel}\n{(_creature.MightLevelLearning - DateTime.UtcNow).ToCompactTime()}";
+			LearningText.text = $"Learning Might {_creature.MightLevel + 1}\n{(_creature.MightLevelLearning.Value - DateTime.UtcNow).ToCompactTime()}";
 		}
-
-		else if (_creature.AgilityLevelLearning > DateTime.UtcNow)
+		else if (_creature.MightLevelLearning != null && _creature.MightLevelLearning < DateTime.UtcNow)
 		{
-			LearningTransform.gameObject.SetActive(true);
-			LearningText.text = $"Learning Agility {_creature.AgilityLevel}\n{(_creature.AgilityLevelLearning - DateTime.UtcNow).ToCompactTime()}";
+			LearningTransform.gameObject.SetActive(false);
+			_creature.MightLevelLearning = null;
+			_creature.MightLevel++;
+			_creature.AggregateStats();
 		}
-
-		else if (_creature.FocusLevelLearning > DateTime.UtcNow)
+		else if (_creature.AgilityLevelLearning != null && _creature.AgilityLevelLearning > DateTime.UtcNow)
 		{
 			LearningTransform.gameObject.SetActive(true);
-			LearningText.text = $"Learning Focus {_creature.FocusLevel}\n{(_creature.FocusLevelLearning - DateTime.UtcNow).ToCompactTime()}";
+			LearningText.text = $"Learning Agility {_creature.AgilityLevel + 1}\n{(_creature.AgilityLevelLearning.Value - DateTime.UtcNow).ToCompactTime()}";
+		}
+		else if (_creature.AgilityLevelLearning != null && _creature.AgilityLevelLearning < DateTime.UtcNow)
+		{
+			LearningTransform.gameObject.SetActive(false);
+			_creature.AgilityLevelLearning = null;
+			_creature.AgilityLevel++;
+			_creature.AggregateStats();
+		}
+		else if (_creature.FocusLevelLearning != null && _creature.FocusLevelLearning > DateTime.UtcNow)
+		{
+			LearningTransform.gameObject.SetActive(true);
+			LearningText.text = $"Learning Focus {_creature.FocusLevel + 1}\n{(_creature.FocusLevelLearning.Value - DateTime.UtcNow).ToCompactTime()}";
+		}
+		else if (_creature.FocusLevelLearning != null && _creature.FocusLevelLearning < DateTime.UtcNow)
+		{
+			LearningTransform.gameObject.SetActive(false);
+			_creature.FocusLevelLearning = null;
+			_creature.FocusLevel++;
+			_creature.AggregateStats();
 		}
 		else
 		{
@@ -79,33 +106,33 @@ public class HeroDetailsController : MonoBehaviour
 		MgtLearnButton.onClick.RemoveAllListeners();
 		MgtLearnButton.onClick.AddListener(() =>
 		{
-			var price = PriceManager.GetStatPrice(_creature.MightLevel);
+			var price = PriceManager.GetStatPrice(_creature.Level);
 			if (DataService.SaveData.Gold >= price)
 			{
 				DataService.SaveData.Gold -= price;
-				_creature.MightLevel++;
+				_creature.Level++;
 				_creature.MightLevelLearning = DateTime.UtcNow.AddSeconds(GlobalConstants.StatLearningTimeSeconds);
 			}
 		});
 		AgiLearnButton.onClick.RemoveAllListeners();
 		AgiLearnButton.onClick.AddListener(() =>
 		{
-			var price = PriceManager.GetStatPrice(_creature.AgilityLevel);
+			var price = PriceManager.GetStatPrice(_creature.Level);
 			if (DataService.SaveData.Gold >= price)
 			{
 				DataService.SaveData.Gold -= price;
-				_creature.AgilityLevel++;
+				_creature.Level++;
 				_creature.AgilityLevelLearning = DateTime.UtcNow.AddSeconds(GlobalConstants.StatLearningTimeSeconds);
 			}
 		});
 		FocLearnButton.onClick.RemoveAllListeners();
 		FocLearnButton.onClick.AddListener(() =>
 		{
-			var price = PriceManager.GetStatPrice(_creature.FocusLevel);
+			var price = PriceManager.GetStatPrice(_creature.Level);
 			if (DataService.SaveData.Gold >= price)
 			{
 				DataService.SaveData.Gold -= price;
-				_creature.FocusLevel++;
+				_creature.Level++;
 				_creature.FocusLevelLearning = DateTime.UtcNow.AddSeconds(GlobalConstants.StatLearningTimeSeconds);
 			}
 		});

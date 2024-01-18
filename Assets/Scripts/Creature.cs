@@ -9,14 +9,14 @@ using UnityEngine;
 public class Creature
 {
 	[OdinSerialize] public string CreatureId { get; set; }
-	[OdinSerialize] public int Level { get; set; }
+	[OdinSerialize] public int Level { get; set; } = 1;
 	[OdinSerialize] public Vector3Int PositionInGroup { get; set; }
-	[OdinSerialize] public int MightLevel { get; set; }
-	[OdinSerialize] public DateTime MightLevelLearning { get; set; }
-	[OdinSerialize] public int AgilityLevel { get; set; }
-	[OdinSerialize] public DateTime AgilityLevelLearning { get; set; }
-	[OdinSerialize] public int FocusLevel { get; set; }
-	[OdinSerialize] public DateTime FocusLevelLearning { get; set; }
+	[OdinSerialize] public int MightLevel { get; set; } = 1;
+	[OdinSerialize] public DateTime? MightLevelLearning { get; set; }
+	[OdinSerialize] public int AgilityLevel { get; set; } = 1;
+	[OdinSerialize] public DateTime? AgilityLevelLearning { get; set; }
+	[OdinSerialize] public int FocusLevel { get; set; } = 1;
+	[OdinSerialize] public DateTime? FocusLevelLearning { get; set; }
 	[OdinSerialize] public List<CreatureSpell> AvailableSpells { get; set; } = new List<CreatureSpell>();
 
 
@@ -32,6 +32,7 @@ public class Creature
 	public Creature()
 	{
 		Health = AggregatedStats.MaxHealth;
+		AggregateStats();
 	}
 
 	public void SetSpells()
@@ -40,6 +41,15 @@ public class Creature
 		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = UnityEngine.Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
 		Debug.Log($"Added {newAttacks.Count()} to the creature {CreatureId}");
 		PeriodicAttacks.AddRange(newAttacks);
+	}
+	public void AggregateStats()
+	{
+		AggregatedStats = new AggregatedStats()
+		{
+			MightLevel = MightLevel,
+			AgilityLevel = AgilityLevel,
+			FocusLevel = FocusLevel,
+		};
 	}
 
 	public void Feed(float deltaT)
