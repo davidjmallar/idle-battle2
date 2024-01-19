@@ -69,7 +69,7 @@ public class HeroDetailsController : MonoBehaviour
 			LearningTransform.gameObject.SetActive(false);
 			_creature.MightLevelLearning = null;
 			_creature.MightLevel++;
-			_creature.AggregateStats();
+			_creature.DoAggregation();
 		}
 		else if (_creature.AgilityLevelLearning != null && _creature.AgilityLevelLearning > DateTime.UtcNow)
 		{
@@ -81,7 +81,7 @@ public class HeroDetailsController : MonoBehaviour
 			LearningTransform.gameObject.SetActive(false);
 			_creature.AgilityLevelLearning = null;
 			_creature.AgilityLevel++;
-			_creature.AggregateStats();
+			_creature.DoAggregation();
 		}
 		else if (_creature.FocusLevelLearning != null && _creature.FocusLevelLearning > DateTime.UtcNow)
 		{
@@ -93,7 +93,7 @@ public class HeroDetailsController : MonoBehaviour
 			LearningTransform.gameObject.SetActive(false);
 			_creature.FocusLevelLearning = null;
 			_creature.FocusLevel++;
-			_creature.AggregateStats();
+			_creature.DoAggregation();
 		}
 		else
 		{

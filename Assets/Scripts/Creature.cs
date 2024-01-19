@@ -19,7 +19,6 @@ public class Creature
 	[OdinSerialize] public DateTime? FocusLevelLearning { get; set; }
 	[OdinSerialize] public List<CreatureSpell> AvailableSpells { get; set; } = new List<CreatureSpell>();
 
-
 	public AnimationState State;
 	public CreatureData Data => DataService.GetCreature(CreatureId);
 	public Vector3Int PositionInMap { get; set; }
@@ -32,7 +31,7 @@ public class Creature
 	public Creature()
 	{
 		Health = AggregatedStats.MaxHealth;
-		AggregateStats();
+		this.DoAggregation();
 	}
 
 	public void SetSpells()
@@ -41,15 +40,6 @@ public class Creature
 		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = UnityEngine.Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
 		Debug.Log($"Added {newAttacks.Count()} to the creature {CreatureId}");
 		PeriodicAttacks.AddRange(newAttacks);
-	}
-	public void AggregateStats()
-	{
-		AggregatedStats = new AggregatedStats()
-		{
-			MightLevel = MightLevel,
-			AgilityLevel = AgilityLevel,
-			FocusLevel = FocusLevel,
-		};
 	}
 
 	public void Feed(float deltaT)
@@ -95,8 +85,8 @@ public class SaveData
 public class AggregatedStats
 {
 	public double MaxHealth { get; set; } = 15;
-	public double SpeedMultiplier { get; set; }
-	public double ThreatMultiplier { get; set; }
+	public double SpeedMultiplier { get; set; } = 1;
+	public double ThreatMultiplier { get; set; } = 1;
 	public int MightLevel { get; set; }
 	public int AgilityLevel { get; set; }
 	public int FocusLevel { get; set; }
