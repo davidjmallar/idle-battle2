@@ -24,12 +24,14 @@ namespace Assets.Scripts
 			{
 				DisplayName = creatureId,
 				SpriteId = creatureId,
+				CharacterBonus = new Buff(),
 			};
 		}
 		public static SpellData GetSpell(string spellId)
 		{
 			return new SpellData()
 			{
+				DisplayName = spellId,
 				SpellId = spellId,
 				Periodicity = 1.0f,
 				SpellIconId = spellId,
@@ -47,7 +49,7 @@ namespace Assets.Scripts
 			return new CreatureSpell()
 			{
 				IsAvailable = i < 3,
-				IsSelected = i < 2,
+				IsActivated = i < 2,
 				Order = i,
 				SpellId = $"{i}",
 			};

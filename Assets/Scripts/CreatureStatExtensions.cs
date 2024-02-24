@@ -1,6 +1,4 @@
-﻿using Unity.VisualScripting;
-
-public static class CreatureStatExtensions
+﻿public static class CreatureStatExtensions
 {
 	public static AggregatedStats Clone(this AggregatedStats stats)
 	{

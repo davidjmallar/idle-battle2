@@ -37,7 +37,7 @@ public class Creature
 	public void SetSpells()
 	{
 		PeriodicAttacks.Clear();
-		var newAttacks = AvailableSpells.Where(s => s.IsSelected).Select(s => new PeriodicAttack() { NextTimeToHit = UnityEngine.Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
+		var newAttacks = AvailableSpells.Where(s => s.IsActivated).Select(s => new PeriodicAttack() { NextTimeToHit = UnityEngine.Random.Range(0f, s.Data.Periodicity), SpellData = s.Data });
 		Debug.Log($"Added {newAttacks.Count()} to the creature {CreatureId}");
 		PeriodicAttacks.AddRange(newAttacks);
 	}
@@ -113,7 +113,7 @@ public class CreatureSpell
 {
 	[OdinSerialize] public string SpellId { get; set; }
 	[OdinSerialize] public bool IsAvailable { get; set; }
-	[OdinSerialize] public bool IsSelected { get; set; }
+	[OdinSerialize] public bool IsActivated { get; set; }
 	[OdinSerialize] public int Order { get; set; }
 	public SpellData Data => DataService.GetSpell(SpellId);
 }

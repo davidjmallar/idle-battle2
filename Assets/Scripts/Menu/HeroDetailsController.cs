@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts;
 using Sirenix.OdinInspector;
 using System;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +27,10 @@ public class HeroDetailsController : MonoBehaviour
 	[Required] public Text QuickLearnButtonText;
 	[Required] public Button QuickLearnButton;
 
+	[Required] public Button SpellGenericButton;
+	[Required] public Text SpellDescription;
+	[Required] public Text SpellTitle;
+
 	private Creature _creature;
 
 	public void SelectHero(Creature creature)
@@ -38,7 +41,12 @@ public class HeroDetailsController : MonoBehaviour
 		for (int i = 0; i < creature.AvailableSpells.Count; i++)
 		{
 			var spell = Instantiate(SpellSlot, SpellSlotsParent);
-			spell.Setup(creature, creature.AvailableSpells[i]);
+			spell.Setup(creature, creature.AvailableSpells[i], s =>
+			{
+				SpellTitle.text = s.Data.DisplayName;
+				SpellGenericButton.onClick.RemoveAllListeners();
+				SpellGenericButton.onClick.AddListener(() => { s.IsActivated = !s.IsActivated; });
+			});
 		}
 		SetupButtons();
 	}
@@ -136,7 +144,5 @@ public class HeroDetailsController : MonoBehaviour
 				_creature.FocusLevelLearning = DateTime.UtcNow.AddSeconds(GlobalConstants.StatLearningTimeSeconds);
 			}
 		});
-
 	}
-
 }
