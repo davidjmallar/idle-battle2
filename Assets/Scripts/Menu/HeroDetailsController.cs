@@ -28,6 +28,9 @@ public class HeroDetailsController : MonoBehaviour
 	[Required] public Button QuickLearnButton;
 
 	[Required] public Button SpellGenericButton;
+	[Required] public Text SpellGenericButtonText;
+	[Required] public Text SpellGenericGoldText;
+	[Required] public Image SpellGenericGoldIcon;
 	[Required] public Text SpellDescription;
 	[Required] public Text SpellTitle;
 
@@ -41,11 +44,38 @@ public class HeroDetailsController : MonoBehaviour
 		for (int i = 0; i < creature.AvailableSpells.Count; i++)
 		{
 			var spell = Instantiate(SpellSlot, SpellSlotsParent);
-			spell.Setup(creature, creature.AvailableSpells[i], s =>
+			spell.Setup(creature, creature.AvailableSpells[i], selectedSpell =>
 			{
-				SpellTitle.text = s.Data.DisplayName;
+				SpellTitle.text = selectedSpell.Data.DisplayName;
+
 				SpellGenericButton.onClick.RemoveAllListeners();
-				SpellGenericButton.onClick.AddListener(() => { s.IsActivated = !s.IsActivated; });
+				if (selectedSpell.IsAvailable)
+				{
+					SpellGenericGoldIcon.gameObject.SetActive(false);
+					SpellGenericGoldText.gameObject.SetActive(false);
+					SpellGenericButtonText.gameObject.SetActive(true);
+					SpellGenericButtonText.text = selectedSpell.IsActivated ? "Deactivate" : "Activate";
+					SpellGenericButton.onClick.AddListener(() =>
+					{
+						selectedSpell.IsActivated = !selectedSpell.IsActivated;
+						SpellGenericButtonText.text = selectedSpell.IsActivated ? "Deactivate" : "Activate";
+					});
+				}
+				else
+				{
+					SpellGenericGoldIcon.gameObject.SetActive(true);
+					SpellGenericGoldText.gameObject.SetActive(true);
+					SpellGenericButtonText.gameObject.SetActive(false);
+					SpellGenericGoldText.text = "100";
+					SpellGenericButton.onClick.AddListener(() =>
+					{
+						selectedSpell.IsAvailable = true;
+						SpellGenericGoldIcon.gameObject.SetActive(false);
+						SpellGenericGoldText.gameObject.SetActive(false);
+						SpellGenericButtonText.gameObject.SetActive(true);
+						SpellGenericButtonText.text = selectedSpell.IsActivated ? "Deactivate" : "Activate";
+					});
+				}
 			});
 		}
 		SetupButtons();

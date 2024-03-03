@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
-
+	public static Action<SpellIconController> OnIconClicked;
 	[Required] public Transform SelectionTransform;
 	[Required] public Transform ActivatedTransform;
 	[Required] public Transform AvailibityTransform;
@@ -21,10 +21,20 @@ public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerU
 		_onSelected = onSelected;
 		_creature = creature;
 		_spell = creatureSpell;
+		OnIconClicked += OnClickedPropagationCallback;
 
 		if (creatureSpell != null)
 			SpellIcon.sprite = SpriteManager.Instance.GetSpellImage(creatureSpell.SpellId);
 	}
+	private void OnDestroy()
+	{
+		OnIconClicked -= OnClickedPropagationCallback;
+	}
+	private void OnClickedPropagationCallback(SpellIconController controller)
+	{
+		SelectionTransform.gameObject.SetActive(controller == this);
+	}
+
 	[Button]
 	public void ActivateSelection()
 	{
@@ -35,7 +45,6 @@ public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerU
 	{
 		AvailibityTransform.gameObject.SetActive(true);
 	}
-
 	private void Update()
 	{
 		UpdateModel();
@@ -49,9 +58,10 @@ public class SpellIconController : MonoBehaviour, IPointerDownHandler, IPointerU
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		if (_spell != null && _spell.IsAvailable)
+		if (_spell != null)
 		{
 			_onSelected?.Invoke(_spell);
+			OnIconClicked?.Invoke(this);
 			//_spell.IsActivated = !_spell.IsActivated;
 			_creature.SetSpells();
 		}
